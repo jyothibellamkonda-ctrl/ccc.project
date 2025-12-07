@@ -1,0 +1,108 @@
+#include <stdio.h>
+#define MAX 5
+
+// Stack structure
+struct PlateStack {
+    int plates[MAX];
+    int top;
+};
+
+// Initialize stack
+void initStack(struct PlateStack *s) {
+    s->top = -1;
+}
+
+// Check if full
+int isFull(struct PlateStack *s) {
+    return s->top == MAX - 1;
+}
+
+// Check if empty
+int isEmpty(struct PlateStack *s) {
+    return s->top == -1;
+}
+
+// Push operation (add plate)
+void push(struct PlateStack *s, int plateNo) {
+    if (isFull(s)) {
+        printf("Plate stack is full! Cannot add more plates.\n");
+    } else {
+        s->top++;
+        s->plates[s->top] = plateNo;
+        printf("Plate %d added to stack.\n", plateNo);
+    }
+}
+
+// Pop operation (remove plate)
+void pop(struct PlateStack *s) {
+    if (isEmpty(s)) {
+        printf("No plates to remove.\n");
+    } else {
+        printf("Plate %d removed.\n", s->plates[s->top]);
+        s->top--;
+    }
+}
+
+// Peek operation (view top plate)
+void peek(struct PlateStack *s) {
+    if (isEmpty(s)) {
+        printf("No plates in the stack.\n");
+    } else {
+        printf("Top plate is: %d\n", s->plates[s->top]);
+    }
+}
+
+// Display stack
+void display(struct PlateStack *s) {
+    if (isEmpty(s)) {
+        printf("Stack is empty.\n");
+    } else {
+        printf("Plates in stack:\n");
+        for (int i = s->top; i >= 0; i--) {
+            printf("%d\n", s->plates[i]);
+        }
+    }
+}
+
+// Main function
+int main() {
+    struct PlateStack s;
+    initStack(&s);
+
+    int choice, plateNo;
+
+    do {
+        printf("\n--- Canteen Plate Stack ---\n");
+        printf("1. Add Plate (Push)\n");
+        printf("2. Remove Plate (Pop)\n");
+        printf("3. View Top Plate (Peek)\n");
+        printf("4. Display Plates\n");
+        printf("5. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter plate number: ");
+                scanf("%d", &plateNo);
+                push(&s, plateNo);
+                break;
+            case 2:
+                pop(&s);
+                break;
+            case 3:
+                peek(&s);
+                break;
+            case 4:
+                display(&s);
+                break;
+            case 5:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
